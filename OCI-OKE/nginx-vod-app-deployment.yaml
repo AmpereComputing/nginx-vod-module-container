@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # This name uniquely identifies the Deployment
+  name: nginx-vod-app-deployment
+  #namespace: vod-poc
+spec:
+  selector:
+    matchLabels:
+      app: nginx-vod-app
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        # Label is used as selector in the service.
+        app: nginx-vod-app
+    spec:
+      # Refer to the PVC created earlier
+      volumes:
+      - name: storage
+        persistentVolumeClaim:
+          # Name of the PVC created earlier
+          claimName: nginx-vod-app-pvc
+      containers:
+      - name: nginx-vod-app
+        # Pulls the default nginx-hell-app image from Docker Hub
+        image: docker.io/mrdojojo/nginx-vod-app:1.1-arm64
+        ports:
+        - containerPort: 8080
+        # Mount the volume into the pod
+        volumeMounts:
+        - name: storage # must match the volume name, above
+          mountPath: "/opt/static/videos"

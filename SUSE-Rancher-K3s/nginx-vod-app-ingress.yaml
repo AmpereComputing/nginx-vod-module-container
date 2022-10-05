@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-vod-app-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /   #new 
+spec:
+  rules:
+  - host: vod.k3s.hhii.amp
+    http:
+      paths:
+      - backend:
+          service:
+            name: nginx-vod-app-service
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix

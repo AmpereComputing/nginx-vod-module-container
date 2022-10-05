@@ -1,0 +1,17 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: nginx-vod-app-service
+  labels:
+    app: nginx-vod-app
+    tier: frontend    
+  annotations:
+    oci.oraclecloud.com/load-balancer-type: "lb"
+  namespace: default
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 8080  
+  selector:
+    app: nginx-vod-app
