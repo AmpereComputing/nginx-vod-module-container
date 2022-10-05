@@ -2,7 +2,7 @@ nginx-vod-module-container
 =======================
 
 This repository contains a Dockerfile for building a non-root user 
-container image for nginx with Kaltura's VOD module nginx with [Kaltura's
+container image for nginx with [Kaltura's
 vod-module](https://github.com/kaltura/nginx-vod-module).
 
 Building locally
