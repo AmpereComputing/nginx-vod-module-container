@@ -1,0 +1,55 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: nginx-vod-app-svc
+  labels:
+    app: nginx-vod-app
+    tier: frontend    
+  annotations:
+    oci.oraclecloud.com/load-balancer-type: "lb"
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 8080  
+  selector:
+    app: nginx-vod-app
+---
+kind: StatefulSet
+apiVersion: apps/v1
+metadata:
+  name: nginx-vod-app
+spec:
+  selector:
+    matchLabels:
+      app: nginx-vod-app # has to match .spec.template.metadata.labels
+  serviceName: "nginx-vod-app-svc"
+  replicas: 3 # by default is 1
+  minReadySeconds: 10 # by default is 0
+  template:
+    metadata:
+      labels:
+        app: nginx-vod-app # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: nginx-vod-app
+        image: docker.io/mrdojojo/nginx-vod-app:1.1-arm64
+        ports:
+        - containerPort: 8080
+          name: nginx-vod-app
+        volumeMounts:
+        - name: nginx-vod-app-pvc   #storage
+          mountPath: "/opt/static/videos"
+  volumeClaimTemplates:
+  - metadata:
+      name: nginx-vod-app-pvc
+      labels:
+        app: nginx-vod-app
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "oci-bv"
+      resources:
+        requests:
+          storage: 100Gi
+
