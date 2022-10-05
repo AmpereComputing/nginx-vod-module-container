@@ -7,3 +7,7 @@
 % kubectl create -f nginx-vod-app-deployment.yaml
 
 % kubectl create -f nginx-vod-app-service.yaml
+
+## The step to deploy the StatefulSet of Nginx VOD App container with PVC template to OCI
+
+% kubectl create -f nginx-vod-app.yaml
