@@ -19,5 +19,5 @@ or
 ```
 podman build -t ampere/nginx-vod-app .
 ```
-Credits
+## Credits
 Thanks to https://github.com/nytimes/nginx-vod-module-docker for providing the Dockerfiles that inspired me.
