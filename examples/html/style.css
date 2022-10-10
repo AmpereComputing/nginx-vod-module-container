@@ -1,0 +1,86 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+.container{
+  width: 90%;
+  margin: 0 auto
+}
+.class {
+  font-family: Calibri,'Droid Sans','san-serif'; 
+}
+.navbar {
+  width:100%;
+  overflow: hidden;
+  height: 50px;
+  line-height: 50px;
+  background: #fff;
+  font-size:20px;
+  border-bottom: 2px solid black;
+}
+.logo{
+  width: 90px;
+  float:left;
+}
+
+/* this is for ul tag */
+.menu{
+  float:right;
+}
+.menu li{
+  float:left;
+  width:120px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  list-style: none;
+}
+.menu li a{
+  color: #000;
+  text-decoration: none;
+  font-family: Calibri, 'Droid Sans', 'san-serif';
+  text-transform: uppercase;
+  display:block;
+}
+.menu li:hover{
+  background: #dc3545
+}
+.menu li a:hover{
+  color: #fff
+}
+#myVideo {
+  position: fixed;
+  z-index: -1;
+  right: 0;
+  bottom: 0;
+  min-width: 100%; 
+  min-height: 100%;
+  filter: brightness(25%);
+}
+
+.gallery {
+  margin: 5px;
+  border: 1px solid #ccc;
+  float: left;
+  width: 360px;
+}
+
+.gallery:hover {
+  border: 1px solid #777;
+}
+
+.gallery img {
+  width: 100%;
+  height: auto;
+}
+
+.desc {
+  padding: 15px;
+  text-align: left;
+  font-family: Calibri, 'Droid Sans', 'sans-serif';
+}
+
+.body {
+  font-family: Calibri,'Droid Sans', 'sans-serif';
+}
+
