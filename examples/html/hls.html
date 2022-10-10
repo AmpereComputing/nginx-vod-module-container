@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Tangerine:bold,bolditalic|Inconsolata:italic|Droid+Sans">
+</head>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+<body>
+  <div class="navbar">
+  <div class="container">
+    <div class="logo_div">
+      <a href="/"><img src="logo.png" alt="" class="logo"></a>
+    </div>
+    <div class="navbar_links">
+      <ul class="menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="dash.html">DASH</a></li>
+        <li><a href="hls.html">HLS</a></li>
+      </ul>
+    </div>
+  </div>
+  </div>
+  <div style='height: 20px; width: 100%'></div>
+	
+	<center>
+    <h2 class='headname'>Ampere VOD Demo | Streaming over HLS</h2> 
+		<video height="600" id="video" controls autoplay loop muted class="videoCentered"></video>
+	</center>  <br>
+	<script>
+        if(Hls.isSupported()) {
+          //console.log('hello hls.js!');
+          var video = document.getElementById('video');
+          var hls = new Hls();
+          hls.loadSource('http://[vod-demo]/hls/[video-prefix],240p.mp4,360p.mp4,480p.mp4,720p.mp4,1080p.mp4,.en_US.vtt,.urlset/master.m3u8');
+          hls.attachMedia(video);
+          hls.on(Hls.Events.MANIFEST_PARSED,function() {
+            video.play();
+        });
+       }
+       // hls.js is not supported on platforms that do not have Media Source Extensions (MSE) enabled.
+       // When the browser has built-in HLS support (check using `canPlayType`), we can provide an HLS manifest (i.e. .m3u8 URL) directly to the video element throught the `src` property.
+       // This is using the built-in support of the plain video element, without using hls.js.
+        else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+          video.src = 'http://[vod-demo]/hls/[video-prefix],240p.mp4,360p.mp4,480p.mp4,720p.mp4,1080p.mp4,.en_US.vtt,.urlset/master.m3u8';
+          video.addEventListener('canplay',function() {
+            video.play();
+          });
+        }
+      </script>
+
+</body>
+
+</html>
