@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Tangerine:bold,bolditalic|Inconsolata:italic|Droid+Sans">
+</head>
+<body>
+  <div class="navbar">
+  <div class="container">
+    <div class="logo_div">
+      <a href="/"><img src="logo.png" alt="" class="logo"></a>
+    </div>
+    <div class="navbar_links">
+      <ul class="menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="dash.html">DASH</a></li>
+        <li><a href="hls.html">HLS</a></li>
+      </ul>
+    </div>
+  </div>
+  </div>
+  <div style='height: 20px; width: 100%'></div>
+	<center>
+    <h2 class='headname'>Ampere VOD Demo | Streaming over DASH</h2> 
+    <video height="600" id="videoPlayer" autoplay loop muted controls></video>
+    <script src="http://cdn.dashjs.org/latest/dash.all.min.js"></script>
+    <script>
+        (function(){
+            var url = "http://[vod-demo]/dash/[video-prefix],240p.mp4,360p.mp4,480p.mp4,720p.mp4,1080p.mp4,.en_US.vtt,.urlset/manifest.mpd";
+            var player = dashjs.MediaPlayer().create();
+            //console.log('hello Dash.js!');
+            player.initialize(document.querySelector("#videoPlayer"), url, true);
+        })();
+    </script>
+	</center>  <br>	
+</body>
+</html>
