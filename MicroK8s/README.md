@@ -1,4 +1,4 @@
-# Deploy Nginx VOD container to Canonical MicroK8s Cluster (v1.24)
+# Deploy Nginx VOD container on Canonical MicroK8s Cluster (v1.24)
 
 The following is the steps to deploy StatefulSet of Nginx VOD container 
 ---
