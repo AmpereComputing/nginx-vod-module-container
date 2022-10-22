@@ -2,19 +2,20 @@
 
 ## Running this example locally
 
-1. Replicate all video and vtt files under videos to a directory as container storage for nginx-vod-app
+1. Replicate all video and vtt files under videos to a directory (for example, vod-demo) as container storage for nginx-vod-app
 2. If you want to use your own video, please make sure the video resolution is higher than 720p, then use bin/transcode.sh to transcode all renditions in 240p, 360p, 480p, 720p & 1080p by the following commands:
 ```
 % chmod +x transcode.sh 
 % ./transcode.sh [video filename] 
 ```
-3.
-4. The hls.html and dash.html under html are example video players for HLS and MPEG-DASH. You can copy them into new files (e.g., Ampere_AI-hls.html or Ampere_AI-dash.html) with the new hostname and video file prefix by the command below 
+3. After trancoding video completed, move the video files under vod-demo/videos 
+4. The hls.html and dash.html under html are the example of HTML5 video players for HLS and MPEG-DASH. 
+You can copy them into new files (e.g., Ampere_AI-hls.html or Ampere_AI-dash.html) with the new hostname and video file prefix by the command below 
 ```
 $ sed -i "s,http://\[vod-demo\]/,http://localhost:3030/,g" Ampere_AI-hls.html
 $ sed -i "s,/\[video-prefix\],/Ampere_AI_,g" Ampere_AI-hls.html
 ```
-4. You can run this example locally with Docker or Podman
+4. You can run this example locally with Docker or Podman under the 
 
 ```
 % docker run -p 3030:8080 --name nginx-vod-app -v $PWD/videos:/opt/static/videos -v $PWD/nginx.conf:/usr/local/nginx/conf/nginx.conf ampere/nginx-vod-app
