@@ -17,11 +17,11 @@ $ sed -i "s,/\[video-prefix\],/Ampere_AI_,g" Ampere_AI-hls.html
 4. You can run this example locally with Docker or Podman
 
 ```
-% docker run -p 3030:8080 --name nginx-vod-app -v $PWD/videos:/opt/static/videos -v $PWD/nginx.conf:/usr/local/nginx/conf/nginx.conf ampere/nginx-vod-module
+% docker run -p 3030:8080 --name nginx-vod-app -v $PWD/videos:/opt/static/videos -v $PWD/nginx.conf:/usr/local/nginx/conf/nginx.conf ampere/nginx-vod-app
 ```
 or
 ```
-% podman run -p 3030:8080 --name nginx-vod-app -v $PWD/videos:/opt/static/videos -v $PWD/nginx.conf:/usr/local/nginx/conf/nginx.conf ampere/nginx-vod-module
+% podman run -p 3030:8080 --name nginx-vod-app -v $PWD/videos:/opt/static/videos -v $PWD/nginx.conf:/usr/local/nginx/conf/nginx.conf ampere/nginx-vod-app
 ```
 
 5. After running this command, you should be able to play the following URLs with VLC video player:
