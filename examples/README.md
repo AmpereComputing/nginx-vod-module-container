@@ -3,8 +3,13 @@
 ## Running this example locally
 
 1. Replicate all video and vtt files under videos to a directory as container storage for nginx-vod-app
-2. If you want to use your own video, please make sure the video resolution is higher than 720p, then use bin/transcode.sh to transcode all renditions in 240p, 360p, 480p, 720p for the following example
-3. The hls.html and dash.html under html are example video players for HLS and MPEG-DASH. You can copy them into new files (e.g., Ampere_AI-hls.html or Ampere_AI-dash.html) with the new hostname and video file prefix by the command below 
+2. If you want to use your own video, please make sure the video resolution is higher than 720p, then use bin/transcode.sh to transcode all renditions in 240p, 360p, 480p, 720p & 1080p by the following commands:
+```
+% chmod +x transcode.sh 
+% ./transcode.sh [video filename] 
+```
+3.
+4. The hls.html and dash.html under html are example video players for HLS and MPEG-DASH. You can copy them into new files (e.g., Ampere_AI-hls.html or Ampere_AI-dash.html) with the new hostname and video file prefix by the command below 
 ```
 $ sed -i "s,http://\[vod-demo\]/,http://localhost:3030/,g" Ampere_AI-hls.html
 $ sed -i "s,/\[video-prefix\],/Ampere_AI_,g" Ampere_AI-hls.html
