@@ -9,7 +9,7 @@
 $ sed -i "s,http://\[vod-demo\]/,http://localhost:3030/,g" Ampere_AI-hls.html
 $ sed -i "s,/\[video-prefix\],/Ampere_AI_,g" Ampere_AI-hls.html
 ```
-4. You can run this example locally with Docker or podman
+4. You can run this example locally with Docker or Podman
 
 ```
 % docker run -p 3030:8080 --name nginx-vod-app -v $PWD/videos:/opt/static/videos -v $PWD/nginx.conf:/usr/local/nginx/conf/nginx.conf ampere/nginx-vod-module
@@ -26,3 +26,5 @@ or
 - Thumbnail: http://localhost:3030/thumb/Ampere_AI_360p.mp4/thumb-3000.jpg
 
 6. You also can use browsers to playback video streaming by opening the html files. Ampere_AI-hls.html and Ampere_AI-dash.html
+
+7. If you want to use a nginx web server container to host those html files, then you can use the Dockerfile on https://github.com/AmpereComputing/nginx-hello-container/ to build the container image to run nginx web server.
