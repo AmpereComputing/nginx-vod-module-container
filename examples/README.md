@@ -57,7 +57,7 @@ or
 ```
 % kubectl -n [namespace] exec -it nginx-vod-app-[0-2] -- sh
 # cd /opt/static/videos
-/opt/static/videos # wget http://[IP address of the host running the container, nginx-html]/vod-demo.tgz
+/opt/static/videos # wget http://[IP address of the host running the nginx web server container, nginx-html]/vod-demo.tgz
 /opt/static/videos # tar zxvf vod-demo.tgz
 /opt/static/videos # exit
 ```
