@@ -42,6 +42,7 @@ or
 % kubectl -n [namespace] create -f ./nginx-vod-module-container/[K8s distro]/nginx-vod-app.yaml
 ```
 3. For deploying the video files to the container in nginx-vod-app pod, you will need a webserver to host those video and subtitle files:
+
 3.1 You can prepare a tarball with those pre-transcoded video files and subtitle file (extension filename: tvv) by the command below:
 ```
 % tar -zcvf vod-demo.tgz *.mp4 *.vtt
