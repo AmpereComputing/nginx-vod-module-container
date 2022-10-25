@@ -37,24 +37,31 @@ or
 
 ## Running this demo on Kubernetes
 1. Find nginx-vod-app.yaml in one of the kubernetes distributions (Canonical MicroK8s, OKE, SUSE K3s) with corresponding StorageClass
-2. You can run the command to deploy the StatefulSet to the namespace on Kubernetes
+2. You can run the command to deploy the StatefulSet to the namespace on Kubernetes from your bastion node
 ```
 % kubectl -n [namespace] create -f ./nginx-vod-module-container/[K8s distro]/nginx-vod-app.yaml
 ```
-3. For deploying the video files to the container in nginx-vod-app pod, you will need a webserver to host those video and subtitle files:
-
-3.1 You can prepare a tarball with those pre-transcoded video files and subtitle file (extension filename: tvv) by the command below:
+3. Check the result after deployed the StatefulSet 
+```
+$ kubectl get pod -n [namespace]
+NAME                READY   STATUS    RESTARTS   AGE
+nginx-vod-app-0     1/1     Running   0          1m
+nginx-vod-app-1     1/1     Running   0          30s
+nginx-vod-app-2     1/1     Running   0          10s
+```
+4. For deploying the video files to the container in nginx-vod-app pod, you will need a webserver to host those video and subtitle files
+5. You can prepare a tarball with those pre-transcoded video files and subtitle file (extension filename: tvv) by the command below:
 ```
 % tar -zcvf vod-demo.tgz *.mp4 *.vtt
 ```
-3.2 Then create a sub-directory such as "nginx-html" and move vod-demo.tgz to "nginx-html", then run the nginx webserver container with the directory
+6. Then create a sub-directory such as "nginx-html" and move vod-demo.tgz to "nginx-html", then run the nginx webserver container with the directory
 ```
 % mkdir nginx-html
 % mv vod-demo.tgz nginx-html
 % cd nginx-html
 % podman run -d --rm -p 8080:8080  --name nginx-html  --user 1001 -v $PWD:/usr/share/nginx/html  docker.io/mrdojojo/nginx-hello-app:1.1-arm64
 ```
-4. Once the Nginx webserver container running, then access the container in nginx-vod-app pod by the commands below:
+7. Once the Nginx webserver container running, then access the container in nginx-vod-app pod by the commands below:
 ```
 % kubectl -n [namespace] exec -it nginx-vod-app-[0-2] -- sh
 # cd /opt/static/videos
@@ -62,4 +69,4 @@ or
 /opt/static/videos # tar zxvf vod-demo.tgz
 /opt/static/videos # exit
 ```
-5. The nginx-vod-app service is ready for streaming video
+8. The nginx-vod-app service is ready for streaming video
