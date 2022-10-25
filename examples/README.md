@@ -34,3 +34,31 @@ or
 6. You also can use browsers to playback video streaming by opening the html files. Ampere_AI-hls.html and Ampere_AI-dash.html
 
 7. If you want to use a nginx web server container to host those html files, then you can use the Dockerfile on https://github.com/AmpereComputing/nginx-hello-container/ to build the container image to run nginx web server.
+
+## Running this demo on Kubernetes
+1. Find nginx-vod-app.yaml in one of the kubernetes distributions (Canonical MicroK8s, OKE, SUSE K3s) with corresponding StorageClass
+2. You can run the command to deploy the StatefulSet to the namespace on Kubernetes
+```
+% kubectl -n [namespace] create -f ./nginx-vod-module-container/[K8s distro]/nginx-vod-app.yaml
+```
+3. For deploying the video files to the container in nginx-vod-app pod, you will need a webserver to host those video and subtitle files:
+3.1 You can prepare a tarball with those pre-transcoded video files and subtitle file (extension filename: tvv) by the command below:
+```
+% tar -zcvf vod-demo.tgz *.mp4 *.vtt
+```
+3.2 Then create a sub-directory such as "nginx-html" and move vod-demo.tgz to "nginx-html", then run the nginx webserver container with the directory
+```
+% mkdir nginx-html
+% mv vod-demo.tgz nginx-html
+% cd nginx-html
+% podman run -d --rm -p 8080:8080  --name nginx-html  --user 1001 -v $PWD:/usr/share/nginx/html  docker.io/mrdojojo/nginx-hello-app:1.1-arm64
+```
+4. Once the Nginx webserver container running, then access the container in nginx-vod-app pod by the commands below:
+```
+% kubectl -n [namespace] exec -it nginx-vod-app-[0-2] -- sh
+# cd /opt/static/videos
+/opt/static/videos # wget http://[IP address of the host running the container, nginx-html]/vod-demo.tgz
+/opt/static/videos # tar zxvf vod-demo.tgz
+/opt/static/videos # exit
+```
+5. The nginx-vod-app service is ready for streaming video
