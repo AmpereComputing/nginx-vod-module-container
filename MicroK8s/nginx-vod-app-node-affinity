@@ -1,0 +1,85 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: nginx-vod-app-svc
+  labels:
+    app: nginx-vod-app
+spec:
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: nginx-vod-app
+  type: ClusterIP
+  sessionAffinity: None
+---
+kind: StatefulSet
+apiVersion: apps/v1
+metadata:
+  name: nginx-vod-app
+spec:
+  selector:
+    matchLabels:
+      app: nginx-vod-app # has to match .spec.template.metadata.labels
+  serviceName: "nginx-vod-app-svc"
+  replicas: 3 # by default is 1
+  minReadySeconds: 10 # by default is 0
+  template:
+    metadata:
+      labels:
+        app: nginx-vod-app # has to match .spec.selector.matchLabels
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: zone
+                operator: In
+                values:
+                 - infra
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: nginx-vod-app
+        image: docker.io/mrdojojo/nginx-vod-app:1.1-arm64
+        ports:
+        - containerPort: 8080
+          name: nginx-vod-app
+        volumeMounts:
+        - name: nginx-vod-app-pvc   #storage
+          mountPath: "/opt/static/videos"
+  volumeClaimTemplates:
+  - metadata:
+      name: nginx-vod-app-pvc
+      labels:
+        app: nginx-vod-app
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "mayastor"
+      resources:
+        requests:
+          storage: 20Gi
+---
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: nginx-vod-app-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: "public"
+    nginx.ingress.kubernetes.io/rewrite-target: /   #new 
+spec:
+  rules:
+  - host: "vod.microk8s.hhii.ampere" 
+    http:
+      paths:
+      - backend:
+          service:
+            name: nginx-vod-app-svc
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
+
+
