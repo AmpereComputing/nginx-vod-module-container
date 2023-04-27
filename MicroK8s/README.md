@@ -6,4 +6,6 @@ The following is the steps to deploy StatefulSet of Nginx VOD container on a Mic
 >
 > Please make sure there is a FQDN in the YAML file for the container! 
 
-% kubectl create -f nginx-vod-app.yaml
+% kubectl create ns vod-poc
+
+% kubectl create -f nginx-vod-app.yaml -n vod-poc
