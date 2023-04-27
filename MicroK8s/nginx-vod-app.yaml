@@ -30,6 +30,10 @@ spec:
       labels:
         app: nginx-vod-app # has to match .spec.selector.matchLabels
     spec:
+      securityContext:
+        runAsUser: 1001
+        runAsGroup: 1001
+        fsGroup: 1001
       terminationGracePeriodSeconds: 10
       containers:
       - name: nginx-vod-app
