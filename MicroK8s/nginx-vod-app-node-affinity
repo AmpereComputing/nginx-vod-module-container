@@ -46,7 +46,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: nginx-vod-app
-        image: docker.io/mrdojojo/nginx-vod-app:1.1-arm64
+        image: docker.io/gulianglily/nginx-vod-app:1.6-arm64
         ports:
         - containerPort: 8080
           name: nginx-vod-app
