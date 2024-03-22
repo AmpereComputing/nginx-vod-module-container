@@ -9,9 +9,10 @@ spec:
     - protocol: TCP
       port: 8080
       targetPort: 8080
+      nodePort: 31888
   selector:
     app: nginx-vod-app
-  type: ClusterIP
+  type: NodePort
   sessionAffinity: None
 ---
 kind: StatefulSet
@@ -51,10 +52,9 @@ spec:
         app: nginx-vod-app
     spec:
       accessModes: [ "ReadWriteOnce" ]
-      storageClassName: "mayastor"
       resources:
         requests:
-          storage: 20Gi
+          storage: 30Gi
 ---
 kind: Ingress
 apiVersion: networking.k8s.io/v1
@@ -76,6 +76,3 @@ spec:
               number: 8080
         path: /
         pathType: Prefix
-
-
-
