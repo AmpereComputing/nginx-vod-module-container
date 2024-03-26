@@ -60,7 +60,6 @@ spec:
         app: nginx-vod-app
     spec:
       accessModes: [ "ReadWriteOnce" ]
-      storageClassName: "mayastor"
       resources:
         requests:
           storage: 20Gi
